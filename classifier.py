@@ -1,4 +1,4 @@
-import numpy as np
+
 import tensorflow as tf
 
 
@@ -8,12 +8,11 @@ train = tf.keras.preprocessing.image_dataset_from_directory(
     images,
     validation_split = 0.2,
     subset='training',
-    seed=42,
+    seed=123,
     image_size=(128,128),
-    batch_size=32,
     label_mode="binary",
-    shuffle=True,
-    interpolation="nearest"
+    interpolation="bicubic",
+    shuffle=True
 )
 
 test = tf.keras.preprocessing.image_dataset_from_directory(
@@ -22,17 +21,12 @@ test = tf.keras.preprocessing.image_dataset_from_directory(
     subset='validation',
     seed=42,
     image_size=(128,128),
-    batch_size=32,
     label_mode="binary",
-    interpolation="nearest",
-    shuffle=False
+    interpolation="bicubic",
+    shuffle=True
 )
-
-
-
-
-
-
+print(train.class_names)
+print(test.class_names)
 
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(64,(3,3),activation="relu",input_shape=(128,128,3)),
@@ -47,9 +41,13 @@ model = tf.keras.models.Sequential([
 ])
 
 model.compile(loss="binary_crossentropy", optimizer="adam",metrics=["accuracy"])
-history = model.fit(train,epochs=10)
+history = model.fit(train,epochs=12)
 model.evaluate(test)
 
 
 model.summary()
 model.evaluate(test)
+
+
+model.save('F:/Files/Portfolio/cnn.keras')
+
