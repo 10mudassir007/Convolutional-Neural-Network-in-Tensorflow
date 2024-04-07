@@ -1,4 +1,3 @@
-
 import tensorflow as tf
 
 
@@ -49,5 +48,5 @@ model.summary()
 model.evaluate(test)
 
 
-model.save('F:/Files/Portfolio/cnn.keras')
+model.save('cnn.keras')
 
